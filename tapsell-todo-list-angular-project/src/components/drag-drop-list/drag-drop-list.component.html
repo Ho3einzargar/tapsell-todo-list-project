@@ -1,0 +1,33 @@
+<div class="example-container">
+    <div class="header-lists">
+        <a class="pointer" matTooltip="Go to list detail" (click)="router.navigate(['list',cardList._id])">
+            <h2>{{cardList.title}}</h2>
+        </a>
+        <div class="example-button-container">
+            <button (click)="newTaskFun(cardList._id)" matTooltip="Create task" mat-mini-fab
+                aria-label="Example icon button with a menu icon">
+                <mat-icon>add</mat-icon>
+            </button>
+            @if (!cardList.isMain) {
+            <button (click)="updateListFun(cardList)" matTooltip="Update list" mat-mini-fab
+                aria-label="Example icon button with a menu icon">
+                <mat-icon>edit</mat-icon>
+            </button>
+
+            <button (click)="removeListFun(cardList._id)" matTooltip="Remove list" mat-mini-fab
+                aria-label="Example icon button with a menu icon">
+                <mat-icon>delete</mat-icon>
+            </button>
+
+            }
+        </div>
+    </div>
+
+    <div [id]="cardList._id||''" [cdkDropListEnterPredicate]="evenPredicate" [cdkDropListConnectedTo]="connectedLists"
+        (cdkDropListDropped)="drop($event)" cdkDropList [cdkDropListData]="cardList.tasks" class="example-list">
+        @for (taskItem of cardList.tasks; track taskItem) {
+        <a (click)="showDetailTaskFun(taskItem)" class="example-box" [cdkDragData]="cardList"
+            cdkDrag>{{taskItem.title}}</a>
+        }
+    </div>
+</div>

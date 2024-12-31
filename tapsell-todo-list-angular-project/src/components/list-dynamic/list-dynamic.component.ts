@@ -1,27 +1,20 @@
 import { DialogModule } from '@angular/cdk/dialog';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TasksService } from '../../services/tasks_services/tasks.service';
 import { ListsService } from '../../services/lists_services/lists.service';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import {
-  moveItemInArray,
-  transferArrayItem,
-  CdkDrag,
-  CdkDropList,
-} from '@angular/cdk/drag-drop';
 import { TaskModel } from '../../models/task.model';
 import { ListModel } from '../../models/list.model';
 import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import { ActionFormDialogComponent } from '../../dialogs/action-form-dialog/action-form-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailDialogComponent } from '../../dialogs/task-detail-dialog/task-detail-dialog.component';
 import { Router } from '@angular/router';
+import { DragDropListComponent } from '../drag-drop-list/drag-drop-list.component';
 
 @Component({
   selector: 'app-list-dynamic',
   standalone: true,
-  imports: [CdkDropList, CdkDrag, MatIconModule, MatButtonModule, MatTooltipModule, DialogModule],
+  imports: [MatIconModule, DragDropListComponent,DialogModule],
   templateUrl: './list-dynamic.component.html',
   styleUrl: './list-dynamic.component.scss'
 })
@@ -56,39 +49,10 @@ export class ListDynamicComponent implements OnInit {
     })
   }
 
-  evenPredicate(item: any) {
-    return item.data.isMain ? false : true;
-  }
-
-  moveToNewList(item: any, listID: any) {
-    console.log("TE", item);
-    let BodyModel: TaskModel = item;
-    BodyModel.list = listID;
-    console.log("Body", BodyModel);
-    this.TaskService.UpdateTaskByID(BodyModel._id!, BodyModel).subscribe(res => console.log("SUBED", res))
-  }
-
-  drop(event: any) {
-    console.log("EV", event);
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-      console.log("IF");
-    } else {
-      console.log("ELS");
-      console.log("1", event.previousContainer.data);
-      console.log("2", event.container.data);
-      console.log("3", event.previousIndex);
-      console.log("4", event.currentIndex);
-
-      transferArrayItem(
-        event.previousContainer.data,
-        event.container.data,
-        event.previousIndex,
-        event.currentIndex,
-      );
-      const movedItem = event.container.data[event.currentIndex];
-      this.moveToNewList(movedItem, event.container.id);
-    }
+  moveToNewList(event: any) {
+    let BodyModel: TaskModel = event.item;
+    BodyModel.list = event.listID;
+    this.TaskService.UpdateTaskByID(BodyModel._id!, BodyModel).subscribe(res => console.log("Updated", res))
   }
 
   newList() {
@@ -147,7 +111,6 @@ export class ListDynamicComponent implements OnInit {
         newModelTask.description = res.data.description;
         newModelTask.done = res.data.done;
         newModelTask.list = listID;
-        console.log("DW", newModelTask);
         this.TaskService.CreateTask(newModelTask).subscribe(taskCreate => taskCreate._id ? this.getAllLists() : null)
       }
     })
@@ -160,16 +123,7 @@ export class ListDynamicComponent implements OnInit {
       data: taskItem
     })
     DialogAction.afterClosed().subscribe(res => {
-      if (res?.status) {
-        this.getAllLists()
-        // let newModelTask: TaskModel = new TaskModel();
-        // newModelTask.title = res.data.title;
-        // newModelTask.description = res.data.description;
-        // newModelTask.done = res.data.done;
-        // newModelTask.list = listID;
-        // console.log("DW", newModelTask);
-        // this.TaskService.CreateTask(newModelTask).subscribe(taskCreate => taskCreate._id ? this.getAllLists() : null)
-      }
+      res?.status ? this.getAllLists() : null
     })
   }
 
