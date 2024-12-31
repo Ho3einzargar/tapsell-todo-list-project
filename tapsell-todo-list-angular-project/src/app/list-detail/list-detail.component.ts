@@ -16,6 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { switchMap } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-list-detail',
@@ -33,6 +34,7 @@ export class ListDetailComponent implements OnInit {
     private dialog: MatDialog,
     private TaskService: TasksService,
     private ListService: ListsService,
+    public snack: MatSnackBar,
     private ActiveRoute: ActivatedRoute
   ) { }
 
@@ -80,11 +82,11 @@ export class ListDetailComponent implements OnInit {
         newModelTask.description = res.data.description;
         newModelTask.done = res.data.done;
         newModelTask.list = listID;
-        this.TaskService.CreateTask(newModelTask).subscribe(taskCreate => taskCreate._id ? this.getMethods() : null)
+        this.TaskService.CreateTask(newModelTask).subscribe(taskCreate => { if (taskCreate._id) { this.getMethods(); this.snack.open(`${taskCreate.title} created`, '', { duration: 2000 }) } })
       }
     })
   }
-  
+
   updateList(listItem: any) {
     const DialogAction = this.dialog.open(ActionFormDialogComponent, {
       maxWidth: '300px',
@@ -96,7 +98,7 @@ export class ListDetailComponent implements OnInit {
     })
     DialogAction.afterClosed().subscribe(res => {
       if (res?.status) {
-        this.ListService.UpdateListByID(listItem._id, res.data.title).subscribe(listCreate => listCreate._id ? this.getMethods() : null)
+        this.ListService.UpdateListByID(listItem._id, res.data.title).subscribe(listCreate => { if (listCreate._id) { this.snack.open(`${listCreate.title} updated`, '', { duration: 2000 }); this.getMethods(); } })
       }
     })
   }

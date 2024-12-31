@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialogContent, MatDialogActions, MatDialogClose, MatDialogRef } from '@angular/material/dialog'; import { MatButtonModule } from '@angular/material/button';;
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { TasksService } from '../../services/tasks_services/tasks.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -15,7 +16,10 @@ import { TasksService } from '../../services/tasks_services/tasks.service';
   styleUrl: './task-detail-dialog.component.scss'
 })
 export class TaskDetailDialogComponent implements OnInit {
-  constructor(public fB: FormBuilder, public dialogRef: MatDialogRef<TaskDetailDialogComponent>, private taskService: TasksService) { }
+  constructor(public fB: FormBuilder, public dialogRef: MatDialogRef<TaskDetailDialogComponent>,
+    private taskService: TasksService,
+    private snack: MatSnackBar
+  ) { }
   data = inject(DIALOG_DATA);
   taskForm: any
   ngOnInit(): void {
@@ -29,11 +33,11 @@ export class TaskDetailDialogComponent implements OnInit {
   }
 
   removeBtn() {
-    this.taskService.DeleteTaskByID(this.data._id).subscribe(res => res._id ? this.dialogRef.close({ status: true }) : null)
+    this.taskService.DeleteTaskByID(this.data._id).subscribe(res => { if (res._id) { this.snack.open(`${res.title} removed`, '', { duration: 2000 }); this.dialogRef.close({ status: true }) } })
   }
 
   updateBtn() {
-    this.taskService.UpdateTaskByID(this.data._id, this.taskForm.value).subscribe(res => res._id ? this.dialogRef.close({ status: true }) : null)
+    this.taskService.UpdateTaskByID(this.data._id, this.taskForm.value).subscribe(res => { if (res._id) { this.snack.open(`${res.title} updated`, '', { duration: 2000 }); this.dialogRef.close({ status: true }) } })
   }
 
 

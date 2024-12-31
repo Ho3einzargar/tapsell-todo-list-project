@@ -8,6 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { TasksService } from '../../services/tasks_services/tasks.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-completed-tasks',
@@ -21,6 +22,7 @@ export class CompletedTasksComponent implements OnInit {
   constructor(
     private completedService: CompletedService,
     private taskService: TasksService,
+    private snack: MatSnackBar,
   ) { }
   ngOnInit(): void {
     this.getTasks();
@@ -29,7 +31,7 @@ export class CompletedTasksComponent implements OnInit {
     this.completedService.GetAllCompletedTask().subscribe(res => this.allTasks = res)
   }
   removeTask(taskID: string) {
-    this.taskService.DeleteTaskByID(taskID).subscribe(res => res._id ? this.getTasks() : null)
+    this.taskService.DeleteTaskByID(taskID).subscribe(res => { if (res._id) { this.snack.open(`${res.title} removed`, '', { duration: 2000 }); this.getTasks() } })
   }
 }
 
