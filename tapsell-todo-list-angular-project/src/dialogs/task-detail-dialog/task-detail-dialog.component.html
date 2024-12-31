@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Task Detail</h2>
+<mat-dialog-content>
+    <form [formGroup]="taskForm">
+        <!-- TItle  -->
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput formControlName="title" type="text" placeholder="Enter title" />
+        </mat-form-field>
+
+        <!-- Description  -->
+        <!-- <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput formControlName="description" type="text" placeholder="Enter description" />
+        </mat-form-field> -->
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" type="text" placeholder="Enter description"></textarea>
+        </mat-form-field>
+
+        <!-- IS Done  -->
+        <section class="example-section">
+            <mat-slide-toggle class="example-margin" formControlName="done">
+                Completed
+            </mat-slide-toggle>
+        </section>
+
+    </form>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+    <button mat-button color="warn" (click)="removeBtn()">Delete</button>
+    <button mat-button (click)="updateBtn()">Update</button>
+    <button mat-button [mat-dialog-close] cdkFocusInitial>Cancel</button>
+</mat-dialog-actions>

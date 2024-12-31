@@ -1,0 +1,26 @@
+<mat-dialog-content>
+    <form [formGroup]="actButtonForm">
+        <div class="col-12 d-flex flex-wrap justify-content-center">
+            @for (item of formKey; track $index) {
+            @if (!item?.btn) {
+            <mat-form-field>
+                <mat-label>{{item.name}}</mat-label>
+                <input matInput [formControlName]="item.name" type="text" [placeholder]="'Enter' + item.name" />
+            </mat-form-field>
+            }
+            @else{
+            <section class="example-section">
+                <mat-slide-toggle class="example-margin" [formControlName]="item.name">
+                    {{item.name}}
+                </mat-slide-toggle>
+            </section>
+            }
+
+            }
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="acceptBtn()">Accept</button>
+    <button mat-button [mat-dialog-close] cdkFocusInitial>Cancel</button>
+</mat-dialog-actions>
