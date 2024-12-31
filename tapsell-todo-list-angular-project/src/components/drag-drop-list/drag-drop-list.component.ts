@@ -15,7 +15,6 @@ import { Router } from '@angular/router';
 })
 export class DragDropListComponent {
   constructor(public router: Router) { }
-  // cardList: ListModel = input(ListModel);
   @Input() cardList: ListModel = new ListModel();
   @Input() connectedLists: string[] = []
   @Output() newTask = new EventEmitter<any>();
@@ -41,8 +40,8 @@ export class DragDropListComponent {
   };
 
 
+  //? When Drop => transfer Item to array destination
   drop(event: any) {
-    console.log("EV", event);
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -57,6 +56,7 @@ export class DragDropListComponent {
     }
   }
 
+  //? When Drop => Check if doesn't main list
   evenPredicate(item: any) {
     return item.data.isMain ? false : true;
   }

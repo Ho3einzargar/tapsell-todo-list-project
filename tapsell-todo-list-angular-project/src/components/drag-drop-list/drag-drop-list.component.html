@@ -1,8 +1,10 @@
 <div class="example-container">
     <div class="header-lists">
+        <!--? List Header  -->
         <a class="pointer" matTooltip="Go to list detail" (click)="router.navigate(['list',cardList._id])">
             <h2>{{cardList.title}}</h2>
         </a>
+        <!--? List Buttons  -->
         <div class="example-button-container">
             <button (click)="newTaskFun(cardList._id)" matTooltip="Create task" mat-mini-fab
                 aria-label="Example icon button with a menu icon">
@@ -23,6 +25,7 @@
         </div>
     </div>
 
+    <!--? Task List  -->
     <div [id]="cardList._id||''" [cdkDropListEnterPredicate]="evenPredicate" [cdkDropListConnectedTo]="connectedLists"
         (cdkDropListDropped)="drop($event)" cdkDropList [cdkDropListData]="cardList.tasks" class="example-list">
         @for (taskItem of cardList.tasks; track taskItem) {

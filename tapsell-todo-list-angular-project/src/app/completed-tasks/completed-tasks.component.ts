@@ -14,7 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [MatCheckboxModule, MatCardModule, MatListModule, MatButtonModule, MatIconModule, MatTooltip],
   templateUrl: './completed-tasks.component.html',
-  styleUrl: './completed-tasks.component.scss'
+  styleUrl: '../list-detail/list-detail.component.scss'
 })
 export class CompletedTasksComponent implements OnInit {
   allTasks: TaskModel[] = [];

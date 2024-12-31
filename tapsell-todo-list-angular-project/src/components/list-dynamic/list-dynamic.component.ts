@@ -65,7 +65,6 @@ export class ListDynamicComponent implements OnInit {
     })
     DialogAction.afterClosed().subscribe(res => {
       if (res?.status) {
-        console.log("DW", res.data);
         let newModelList: ListModel = new ListModel();
         newModelList.title = res.data.title;
         this.ListService.CreateList({ title: res.data.title, isMain: false, date: new Date().getTime() }).subscribe(listCreate => listCreate._id ? this.getAllLists() : null)

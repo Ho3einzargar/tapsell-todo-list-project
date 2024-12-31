@@ -1,5 +1,4 @@
-<mat-card>
-    <mat-card-content>List Detail</mat-card-content>
+<section>
     <!--? List Header  -->
     <div class="listItem-container">
         <div class="header-lists">
@@ -17,11 +16,6 @@
                     <mat-icon>edit</mat-icon>
                 </button>
 
-                <button (click)="removeList(listInfo._id)" matTooltip="Remove list" mat-mini-fab
-                    aria-label="Example icon button with a menu icon">
-                    <mat-icon>delete</mat-icon>
-                </button>
-
                 }
             </div>
         </div>
@@ -31,12 +25,15 @@
             @for (taskItem of listInfo.tasks; track $index) {
             <mat-list-item role="listitem">
                 <div class="mat-list-item">
+                    <!--? Title  -->
                     <span>
                         {{taskItem.title}}
                     </span>
+                    <!--? Date  -->
                     <span>
                         {{taskItem.date}}
                     </span>
+                    <!--? Checkbox  -->
                     <div style="display: flex;flex-wrap: wrap;align-items: center">
                         <mat-checkbox class="example-margin" [checked]="taskItem.done" disabled>Completed</mat-checkbox>
                         <button style="margin-inline: 3px;" (click)="showDetailTask(taskItem)" matTooltip="task Detail"
@@ -49,4 +46,5 @@
             }
         </mat-list>
     </div>
-</mat-card>
+
+</section>

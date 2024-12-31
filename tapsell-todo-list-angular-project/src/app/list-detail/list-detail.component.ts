@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { TasksService } from '../../services/tasks_services/tasks.service';
 import { ListsService } from '../../services/lists_services/lists.service';
 import { ActivatedRoute } from '@angular/router';
@@ -16,11 +15,12 @@ import { TaskDetailDialogComponent } from '../../dialogs/task-detail-dialog/task
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-list-detail',
   standalone: true,
-  imports: [MatExpansionModule, MatCheckboxModule, MatSlideToggleModule, MatCardModule, MatListModule, MatIconModule, MatTooltip, MatButtonModule, DialogModule],
+  imports: [MatCheckboxModule, MatSlideToggleModule, MatCardModule, MatListModule, MatIconModule, MatTooltip, MatButtonModule, DialogModule],
   templateUrl: './list-detail.component.html',
   styleUrl: './list-detail.component.scss'
 })
@@ -41,32 +41,22 @@ export class ListDetailComponent implements OnInit {
       if (param.id) this.listID = param.id;
     });
 
-    this.getTasks();
-    this.getInfoMethod();
-    this.getInfoLists();
+    this.getMethods();
   }
-
-  getInfoMethod() {
-    this.getTasks()
-    this.getInfoLists()
-  }
-  getTasks() {
-    this.TaskService.GetTasksByListID(this.listID).subscribe(res => this.allTasks = res)
-  }
-
-
-  removeList(listID: any) {
-    this.ListService.DeleteListByID(listID).subscribe(listCreate => listCreate._id ? this.getInfoMethod() : null)
-  }
-
-
-  getInfoLists() {
-    this.ListService.GetListByListID(this.listID).subscribe(listItem => {
-      listItem.tasks = this.allTasks;
-      this.listInfo = listItem;
-      console.log("LL", listItem);
-
-    })
+  getMethods() {
+    //? Get All Tasks For List 
+    this.TaskService.GetTasksByListID(this.listID).pipe(
+      switchMap(task => {
+        if (task) this.allTasks = task;
+        //? Get List Info
+        return this.ListService.GetListByListID(this.listID);
+      }),
+    )
+      //? Assign Task List in List Item
+      .subscribe(listItem => {
+        listItem.tasks = this.allTasks;
+        this.listInfo = listItem;
+      })
   }
 
   newTask(listID: any) {
@@ -81,29 +71,32 @@ export class ListDetailComponent implements OnInit {
         ]
       }
     })
+    //? After Close
     DialogAction.afterClosed().subscribe(res => {
+      //? Check IF Closed with Button Or pressed accept button
       if (res?.status) {
         let newModelTask: TaskModel = new TaskModel();
         newModelTask.title = res.data.title;
         newModelTask.description = res.data.description;
         newModelTask.done = res.data.done;
         newModelTask.list = listID;
-        this.TaskService.CreateTask(newModelTask).subscribe(taskCreate => taskCreate._id ? this.getInfoMethod() : null)
+        this.TaskService.CreateTask(newModelTask).subscribe(taskCreate => taskCreate._id ? this.getMethods() : null)
       }
     })
   }
-
+  
   updateList(listItem: any) {
     const DialogAction = this.dialog.open(ActionFormDialogComponent, {
       maxWidth: '300px',
       maxHeight: '500px',
       data: {
+        //? Fields for show form and action
         fields: [{ name: 'title', value: listItem.title }]
       }
     })
     DialogAction.afterClosed().subscribe(res => {
       if (res?.status) {
-        this.ListService.UpdateListByID(listItem._id, res.data.title).subscribe(listCreate => listCreate._id ? this.getInfoMethod() : null)
+        this.ListService.UpdateListByID(listItem._id, res.data.title).subscribe(listCreate => listCreate._id ? this.getMethods() : null)
       }
     })
   }
@@ -115,7 +108,7 @@ export class ListDetailComponent implements OnInit {
       data: taskItem
     })
     DialogAction.afterClosed().subscribe(res => {
-      res?.status ? this.getInfoMethod() : null
+      res?.status ? this.getMethods() : null
     })
   }
 

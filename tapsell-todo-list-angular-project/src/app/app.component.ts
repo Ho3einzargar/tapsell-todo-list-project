@@ -10,5 +10,4 @@ import { MatToolbarModule } from '@angular/material/toolbar';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'tapsell-todo-list-angular-project';
 }
