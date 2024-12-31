@@ -1,1 +1,52 @@
-<p>list-detail works!</p>
+<mat-card>
+    <mat-card-content>List Detail</mat-card-content>
+    <!--? List Header  -->
+    <div class="listItem-container">
+        <div class="header-lists">
+            <a class="pointer" matTooltip="Go to list detail">
+                <h2>{{listInfo.title}}</h2>
+            </a>
+            <div class="example-button-container">
+                <button (click)="newTask(listInfo._id)" matTooltip="Create task" mat-mini-fab
+                    aria-label="Example icon button with a menu icon">
+                    <mat-icon>add</mat-icon>
+                </button>
+                @if (!listInfo.isMain) {
+                <button (click)="updateList(listInfo)" matTooltip="Update list" mat-mini-fab
+                    aria-label="Example icon button with a menu icon">
+                    <mat-icon>edit</mat-icon>
+                </button>
+
+                <button (click)="removeList(listInfo._id)" matTooltip="Remove list" mat-mini-fab
+                    aria-label="Example icon button with a menu icon">
+                    <mat-icon>delete</mat-icon>
+                </button>
+
+                }
+            </div>
+        </div>
+
+        <!--? Task of list  -->
+        <mat-list role="list">
+            @for (taskItem of listInfo.tasks; track $index) {
+            <mat-list-item role="listitem">
+                <div class="mat-list-item">
+                    <span>
+                        {{taskItem.title}}
+                    </span>
+                    <span>
+                        {{taskItem.date}}
+                    </span>
+                    <div style="display: flex;flex-wrap: wrap;align-items: center">
+                        <mat-checkbox class="example-margin" [checked]="taskItem.done" disabled>Completed</mat-checkbox>
+                        <button style="margin-inline: 3px;" (click)="showDetailTask(taskItem)" matTooltip="task Detail"
+                            mat-mini-fab aria-label="Example icon button with a menu icon">
+                            <mat-icon>info</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-list-item>
+            }
+        </mat-list>
+    </div>
+</mat-card>

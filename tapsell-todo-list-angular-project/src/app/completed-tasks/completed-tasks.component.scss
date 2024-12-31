@@ -2,7 +2,6 @@
     width: 30%;
     padding: 10px;
 }
-
 .taskItem {
     margin-bottom: 4pc;
 }
@@ -37,13 +36,14 @@ mat-card {
     background: gray;
     align-items: center;
 }
-.mat-list-item {
+.mat-list-item{
+    align-items: center;
     border: 1px solid;
     border-radius: 8px;
     padding-inline: 5px;
     padding-top: 2px;
     padding-bottom: 2px;
-    align-items: center;
+
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

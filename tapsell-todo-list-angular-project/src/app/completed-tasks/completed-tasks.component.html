@@ -1,0 +1,33 @@
+<mat-card>
+    <mat-card-content>List Detail</mat-card-content>
+    <!--? List Header  -->
+    <div class="listItem-container">
+        <div class="header-lists">
+            <a class="pointer" matTooltip="Go to list detail">
+                <h2>Completed Tasks</h2>
+            </a>
+        </div>
+
+        <!--? Task of list  -->
+        <mat-list role="list">
+            @for (taskItem of allTasks; track $index) {
+            <mat-list-item role="listitem">
+                <div class="mat-list-item">
+                    <span>
+                        {{taskItem.title}}
+                    </span>
+                    <span>
+                        {{taskItem.date}}
+                    </span>
+                    <div>
+                        <button color="warn" (click)="removeTask(taskItem._id!)" matTooltip="remove Task" mat-mini-fab
+                            aria-label="Example icon button with a menu icon">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </mat-list-item>
+            }
+        </mat-list>
+    </div>
+</mat-card>

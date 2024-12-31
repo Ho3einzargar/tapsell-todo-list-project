@@ -10,11 +10,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailDialogComponent } from '../../dialogs/task-detail-dialog/task-detail-dialog.component';
 import { Router } from '@angular/router';
 import { DragDropListComponent } from '../drag-drop-list/drag-drop-list.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-list-dynamic',
   standalone: true,
-  imports: [MatIconModule, DragDropListComponent,DialogModule],
+  imports: [MatIconModule, MatButtonModule, DragDropListComponent, DialogModule],
   templateUrl: './list-dynamic.component.html',
   styleUrl: './list-dynamic.component.scss'
 })
@@ -30,7 +31,6 @@ export class ListDynamicComponent implements OnInit {
   allLists: ListModel[] = [];
   connectedLists: string[] = [];
   ngOnInit(): void {
-    // this.getMainList();
     this.getAllTasks();
     this.getAllLists();
   }
