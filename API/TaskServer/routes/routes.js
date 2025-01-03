@@ -14,7 +14,7 @@ router.get('/tasks/', function(req, res, next) {
 });
 
 router.get('/tasks/query/:list', function(req, res, next) {
-  Task.find({list:req.params.list},function (err, tasks) {
+  Task.find({ list: req.params.list, done: false },function (err, tasks) {
     if (err) return res.json({error:true,message:err});
     res.json(tasks);
   });
