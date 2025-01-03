@@ -12,13 +12,8 @@ import { Router } from '@angular/router';
 import { DragDropListComponent } from '../drag-drop-list/drag-drop-list.component';
 import { MatButtonModule } from '@angular/material/button';
 import {
-  MatSnackBar,
-  MatSnackBarAction,
-  MatSnackBarActions,
-  MatSnackBarLabel,
-  MatSnackBarRef,
+  MatSnackBar
 } from '@angular/material/snack-bar';
-import { switchMap } from 'rxjs';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -37,7 +32,6 @@ export class ListDynamicComponent implements OnInit {
     public router: Router,
   ) {
   }
-  allTasks: TaskModel[] = [];
   allLists: ListModel[] = [];
   connectedLists: string[] = [];
   ngOnInit(): void {
@@ -45,11 +39,7 @@ export class ListDynamicComponent implements OnInit {
   }
 
   getData() {
-    this.TaskService.GetAllTasks().pipe(switchMap(task => {
-      if (task) this.allTasks = task;
-      //? Get List Info
-      return this.ListService.GetAllLists();
-    }))
+    this.ListService.GetAllLists()
       .subscribe(res => {
         this.allLists = res;
         this.connectedLists = this.allLists.map(listItem => listItem._id!);
