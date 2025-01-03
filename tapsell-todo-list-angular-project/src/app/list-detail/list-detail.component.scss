@@ -1,51 +1,111 @@
 .listItem-container {
     width: 30%;
-    padding: 10px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.listItem-container:hover {
+    transform: scale(1.02);
+    box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.15);
 }
 
 .taskItem {
-    margin-bottom: 4pc;
+    margin-bottom: 20px;
 }
 
 .example-button-container {
-    button {
-        margin-inline: 5px;
-    }
-    margin: 0px;
+    display: flex;
+    gap: 10px;
+}
+
+.example-button-container button {
+    margin-inline: 5px;
+    background-color: #6200ea;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.example-button-container button:hover {
+    background-color: #3700b3;
 }
 
 .header-lists {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    margin-bottom: 2px;
-    h2 {
-        margin: 0px;
-    }
     align-items: center;
-    gap: 6px;
+    gap: 10px;
+    margin-bottom: 10px;
 }
 
-::ng-deep {
-    .mdc-list-item__primary-text {
-        color: black !important;
-    }
+.header-lists h2 {
+    margin: 0;
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: color 0.3s;
 }
+
+.header-lists h2:hover {
+    color: #6200ea;
+}
+
+::ng-deep .mdc-list-item__primary-text {
+    color: black !important;
+}
+
 section {
-    margin: 10px;
-    height: 100vh;
+    margin: 20px;
+    min-height: 100vh;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    background-color: #f3f4f6;
+    padding: 20px;
 }
+
 .mat-list-item {
-    border: 1px solid;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    padding-inline: 5px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    align-items: center;
+    padding: 3px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
+    transition: box-shadow 0.3s;
+    background-color: white;
+}
+
+.mat-list-item:hover {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.mat-list-item span {
+    font-size: 1rem;
+    color: #555;
+}
+
+.mat-list-item div {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.mat-list-item mat-checkbox {
+    margin-inline: 10px;
+    color: #6200ea;
+}
+
+.mat-list-item button {
+    background-color: #6200ea;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.mat-list-item button:hover {
+    background-color: #3700b3;
 }

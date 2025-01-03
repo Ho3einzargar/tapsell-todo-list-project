@@ -16,7 +16,7 @@
                         {{taskItem.title}}
                     </span>
                     <span>
-                        {{taskItem.date}}
+                        {{taskItem.date | datePipe}}
                     </span>
                     <div>
                         <button color="warn" (click)="removeTask(taskItem._id!)" matTooltip="remove Task" mat-mini-fab

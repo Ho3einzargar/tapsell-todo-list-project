@@ -18,11 +18,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { switchMap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Validators } from '@angular/forms';
+import { DatePipe } from '../../pipes/date.pipe';
 
 @Component({
   selector: 'app-list-detail',
   standalone: true,
-  imports: [MatCheckboxModule, MatSlideToggleModule, MatCardModule, MatListModule, MatIconModule, MatTooltip, MatButtonModule, DialogModule],
+  imports: [MatCheckboxModule, DatePipe, MatSlideToggleModule, MatCardModule, MatListModule, MatIconModule, MatTooltip, MatButtonModule, DialogModule],
   templateUrl: './list-detail.component.html',
   styleUrl: './list-detail.component.scss'
 })

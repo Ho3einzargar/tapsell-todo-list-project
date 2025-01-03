@@ -9,11 +9,12 @@ import { MatCardModule } from '@angular/material/card';
 import { TasksService } from '../../services/tasks_services/tasks.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { DatePipe } from '../../pipes/date.pipe';
 
 @Component({
   selector: 'app-completed-tasks',
   standalone: true,
-  imports: [MatCheckboxModule, MatCardModule, MatListModule, MatButtonModule, MatIconModule, MatTooltip],
+  imports: [MatCheckboxModule, DatePipe, MatCardModule, MatListModule, MatButtonModule, MatIconModule, MatTooltip],
   templateUrl: './completed-tasks.component.html',
   styleUrl: '../list-detail/list-detail.component.scss'
 })
