@@ -6,17 +6,17 @@
         </a>
         <!--? List Buttons  -->
         <div class="example-button-container">
-            <button (click)="newTaskFun(cardList._id)" matTooltip="Create task" mat-mini-fab
+            <button (click)="newTaskFun(cardList._id)" color="accent" matTooltip="Create task" mat-mini-fab
                 aria-label="Example icon button with a menu icon">
                 <mat-icon>add</mat-icon>
             </button>
             @if (!cardList.isMain) {
-            <button (click)="updateListFun(cardList)" matTooltip="Update list" mat-mini-fab
+            <button (click)="updateListFun(cardList)" color="primary" matTooltip="Update list" mat-mini-fab
                 aria-label="Example icon button with a menu icon">
                 <mat-icon>edit</mat-icon>
             </button>
 
-            <button (click)="removeListFun(cardList._id)" matTooltip="Remove list" mat-mini-fab
+            <button (click)="removeListFun(cardList._id)" color="warn" matTooltip="Remove list" mat-mini-fab
                 aria-label="Example icon button with a menu icon">
                 <mat-icon>delete</mat-icon>
             </button>
