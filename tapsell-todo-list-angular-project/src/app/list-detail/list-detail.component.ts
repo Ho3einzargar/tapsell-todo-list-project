@@ -17,6 +17,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { switchMap } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-list-detail',
@@ -67,7 +68,7 @@ export class ListDetailComponent implements OnInit {
       maxHeight: '500px',
       data: {
         fields: [
-          { name: 'title', value: '' },
+          { name: 'title', value: '', validators: [Validators.required] },
           { name: 'description', value: '' },
           { name: 'done', value: false, btn: true }
         ]
@@ -93,7 +94,7 @@ export class ListDetailComponent implements OnInit {
       maxHeight: '500px',
       data: {
         //? Fields for show form and action
-        fields: [{ name: 'title', value: listItem.title }]
+        fields: [{ name: 'title', value: listItem.title, validators: [Validators.required] }]
       }
     })
     DialogAction.afterClosed().subscribe(res => {

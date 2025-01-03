@@ -25,7 +25,7 @@ export class ActionFormDialogComponent implements OnInit {
   //? Set each value from array in parent component
   setValueForm(fields: any) {
     fields.forEach((source: any) => {
-      this.actButtonForm.addControl(source.name, new FormControl(source.value));
+      this.actButtonForm.addControl(source.name, new FormControl(source.value, { validators: source?.validators }));
       this.formKey.push(source);
     });
   }
